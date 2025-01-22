@@ -1,35 +1,64 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+// src/App.tsx
+import React, { useState } from 'react';
+import axios from 'axios';
 import './App.css'
-
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+ 
+interface Recommendation {
+  movie: string;
+  explanation: string;
 }
-
-export default App
+ 
+const App: React.FC = () => {
+  const [movieInput, setMovieInput] = useState<string>('');
+  const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
+ 
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setMovieInput(event.target.value);
+  };
+ 
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    setLoading(true);
+    setError('');
+    try {
+      const response = await axios.post('https://your-backend-url.com/recommend', { movie: movieInput });
+      setRecommendations(response.data);
+    } catch (err) {
+      setError('An error occurred while fetching recommendations.');
+    }
+    setLoading(false);
+  };
+ 
+  return (
+    <div className="container">
+      <h1>Movie Recommendation</h1>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={movieInput}
+          onChange={handleInputChange}
+          placeholder="Enter a movie"
+          required
+        />
+        <button type="submit" disabled={loading}>
+          Get Recommendations
+        </button>
+      </form>
+ 
+      {loading && <p className="loading">Loading...</p>}
+      {error && <p className="error">{error}</p>}
+ 
+      <ul>
+        {recommendations.map((rec, index) => (
+          <li key={index}>
+            <strong>{rec.movie}</strong>: {rec.explanation}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+ 
+export default App;

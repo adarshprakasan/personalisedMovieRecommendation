@@ -1,42 +1,136 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+/* Reset some default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+ 
+/* Body styles */
+body {
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(45deg, #382a2b, #141111);  /* Red gradient background */
+  color: #fff;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+}
+ 
+/* Main container */
+.container {
   text-align: center;
+  padding: 2rem;
+  border-radius: 15px;
+  background: rgba(0, 0, 0, 0.7);  /* Blackish background */
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
 }
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+ 
+/* Title */
+h1 {
+  font-size: 2rem;  /* Reduced font size */
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+ 
+/* Input field styles */
+input[type="text"] {
+  width: 80%;
+  padding: 15px;
+  margin-bottom: 1.5rem;
+  border-radius: 10px;
+  border: 2px solid #fff;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
 }
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+ 
+input[type="text"]:focus {
+  outline: none;
+  border-color: #d90429;  /* Red border on focus */
+  background: rgba(255, 255, 255, 0.2);
 }
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+ 
+/* Button styles */
+button {
+  padding: 10px 20px;
+  border-radius: 30px;
+  background: #d90429;  /* Red background */
+  color: #fff;
+  font-size: 1.2rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+ 
+button:hover {
+  background-color: #e63946;  /* Slightly lighter red on hover */
+}
+ 
+button:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+ 
+/* Loading spinner */
+.loading {
+  color: #fff;
+  font-size: 1.5rem;
+  margin-top: 1rem;
+  animation: pulse 1.5s infinite;
+}
+ 
+/* Error message */
+.error {
+  color: #ff4c4c;
+  font-size: 1.2rem;
+  margin-top: 1rem;
+}
+ 
+/* Recommendation list */
+ul {
+  list-style-type: none;
+  margin-top: 2rem;
+  padding: 0;
+}
+ 
+li {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+ 
+li:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.2);
+}
+ 
+strong {
+  color: #000000;  /* Red color for the recommendation title */
+  font-weight: bold;
+}
+ 
+/* Animation for the loading state */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
   }
-  to {
-    transform: rotate(360deg);
+  50% {
+    transform: scale(1.1);
   }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+  100% {
+    transform: scale(1);
   }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
 }
