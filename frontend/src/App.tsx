@@ -1,36 +1,38 @@
-// src/App.tsx
-import React, { useState } from 'react';
-import axios from 'axios';
-import './App.css'
- 
+import React, { useState } from "react";
+import axios from "axios";
+import "./App.css";
+
 interface Recommendation {
-  movie: string;
-  explanation: string;
+  title: string;
+  reason: string;
 }
- 
+
 const App: React.FC = () => {
-  const [movieInput, setMovieInput] = useState<string>('');
+  const [movieInput, setMovieInput] = useState<string>("");
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>('');
- 
+  const [error, setError] = useState<string>("");
+
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setMovieInput(event.target.value);
   };
- 
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setLoading(true);
-    setError('');
+    setError("");
     try {
-      const response = await axios.post('https://your-backend-url.com/recommend', { movie: movieInput });
-      setRecommendations(response.data);
+      const response = await axios.post("http://127.0.0.1:8000/recommend", {
+        movie: movieInput,
+      });
+      setRecommendations(response.data.recommendations);
+      console.log(recommendations);
     } catch (err) {
-      setError('An error occurred while fetching recommendations.');
+      setError("An error occurred while fetching recommendations.");
     }
     setLoading(false);
   };
- 
+
   return (
     <div className="container">
       <h1>Movie Recommendation</h1>
@@ -46,10 +48,10 @@ const App: React.FC = () => {
           Get Recommendations
         </button>
       </form>
- 
+
       {loading && <p className="loading">Loading...</p>}
       {error && <p className="error">{error}</p>}
- 
+
       <ul>
         {recommendations.map((rec, index) => (
           <li key={index}>
@@ -60,5 +62,5 @@ const App: React.FC = () => {
     </div>
   );
 };
- 
+
 export default App;
