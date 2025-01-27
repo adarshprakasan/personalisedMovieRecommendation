@@ -8,7 +8,7 @@ interface Recommendation {
 }
 
 const App: React.FC = () => {
-  const [movieInput, setMovieInput] = useState<string>("");
+  const [movie_input, setMovieInput] = useState<string>("");
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
@@ -23,10 +23,10 @@ const App: React.FC = () => {
     setError("");
     try {
       const response = await axios.post("http://127.0.0.1:8000/recommend", {
-        movie: movieInput,
+        movie: movie_input,
       });
-      setRecommendations(response.data.recommendations);
-      console.log(recommendations);
+      setRecommendations(response.data.recommended_movies);
+      // console.log(recommendations);
     } catch (err) {
       setError("An error occurred while fetching recommendations.");
     }
@@ -39,7 +39,7 @@ const App: React.FC = () => {
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          value={movieInput}
+          value={movie_input}
           onChange={handleInputChange}
           placeholder="Enter a movie"
           required
@@ -55,7 +55,7 @@ const App: React.FC = () => {
       <ul>
         {recommendations.map((rec, index) => (
           <li key={index}>
-            <strong>{rec.movie}</strong>: {rec.explanation}
+            <strong>{rec.title}</strong>: {rec.explanation}
           </li>
         ))}
       </ul>
